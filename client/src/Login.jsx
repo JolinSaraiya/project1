@@ -49,37 +49,46 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 font-sans">
-            <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-green-100">
+        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+            {/* Animated Background Blobs */}
+            <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+            <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+            <div className="absolute -bottom-32 left-20 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+
+            <div className="max-w-md w-full glass rounded-3xl p-8 relative z-10 border-t border-l border-white/20 shadow-2xl backdrop-blur-3xl">
                 <div className="text-center mb-8">
-                    <div className="mx-auto h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                        <span className="text-3xl">🌱</span>
+                    <div className="mx-auto h-20 w-20 glass rounded-2xl flex items-center justify-center mb-4 shadow-lg rotate-3 hover:rotate-0 transition-all duration-500">
+                        <span className="text-4xl filter drop-shadow-lg">🌱</span>
                     </div>
-                    <h1 className="text-3xl font-extrabold text-green-900">Green-Tax</h1>
-                    <p className="text-gray-500 mt-2">Earn rewards for sustainable living</p>
+                    <h1 className="text-3xl font-black tracking-tight text-white drop-shadow-md bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
+                        Green-Tax
+                    </h1>
+                    <p className="text-blue-100 font-medium mt-2 tracking-wide text-sm opacity-80">
+                        iOS 26 Futuristic Rewards
+                    </p>
                 </div>
 
-                <form onSubmit={handleAuth} className="space-y-6">
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <form onSubmit={handleAuth} className="space-y-5">
+                    <div className="space-y-1">
+                        <label htmlFor="email" className="block text-xs font-bold text-blue-100 uppercase tracking-widest ml-1">Email</label>
                         <input
                             id="email"
                             type="email"
                             required
-                            className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 outline-none"
-                            placeholder="you@example.com"
+                            className="w-full input-glass"
+                            placeholder="citizen@future.city"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div className="space-y-1">
+                        <label htmlFor="password" className="block text-xs font-bold text-blue-100 uppercase tracking-widest ml-1">Password</label>
                         <input
                             id="password"
                             type="password"
                             required
-                            className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 outline-none"
+                            className="w-full input-glass"
                             placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -89,40 +98,39 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                        className={`w-full btn-glass mt-4 ${loading ? 'opacity-70 cursor-wait' : ''}`}
                     >
                         {loading ? (
-                            <span className="flex items-center">
+                            <span className="flex items-center justify-center">
                                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                {isSignUp ? 'Creating Account...' : 'Signing In...'}
+                                Authenticating...
                             </span>
-                        ) : (isSignUp ? 'Create Account' : 'Sign In')}
+                        ) : (isSignUp ? 'Initialize Identity' : 'Access Portal')}
                     </button>
                 </form>
 
                 {message && (
-                    <div className={`mt-6 p-4 rounded-lg text-center text-sm font-medium ${message.includes('Error') ? 'bg-red-50 text-red-700 border border-red-100' : 'bg-blue-50 text-blue-700 border border-blue-100'}`}>
+                    <div className={`mt-6 p-4 rounded-xl text-center text-sm font-bold backdrop-blur-md border ${message.includes('Error') ? 'bg-red-500/20 border-red-500/30 text-red-100' : 'bg-green-500/20 border-green-500/30 text-green-100'}`}>
                         {message}
                     </div>
                 )}
 
-                <div className="mt-4 text-center">
+                <div className="mt-6 text-center">
                     <button
                         type="button"
                         onClick={() => { setIsSignUp(!isSignUp); setMessage(''); }}
-                        className="text-sm text-green-600 hover:text-green-800 font-medium"
+                        className="text-sm text-white/70 hover:text-white font-medium transition-colors hover:scale-105 transform duration-200"
                     >
-                        {isSignUp ? 'Already have an account? Sign In' : 'Need an account? Sign Up'}
+                        {isSignUp ? 'Already verified? Access Portal' : 'New Citizen? Initialize Identity'}
                     </button>
                 </div>
 
-                <div className="mt-6 text-center border-t border-gray-100 pt-4">
-                    <p className="text-sm text-gray-500 mb-2">Are you an administrator?</p>
-                    <button onClick={() => navigate('/admin-login')} className="text-gray-600 hover:text-gray-900 font-semibold text-sm transition-colors">
-                        Admin Login →
+                <div className="mt-8 text-center border-t border-white/10 pt-4">
+                    <button onClick={() => navigate('/admin-login')} className="text-xs text-white/40 hover:text-white/80 font-bold uppercase tracking-widest transition-all">
+                        Admin Console Access
                     </button>
                 </div>
             </div>

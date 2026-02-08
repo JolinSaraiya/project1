@@ -172,133 +172,125 @@ const Upload = ({ session }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-            <div className="max-w-lg w-full bg-white rounded-xl shadow-lg overflow-hidden">
-                <div className="bg-green-600 p-4 text-white flex justify-between items-center">
-                    <h2 className="text-xl font-bold flex items-center">
-                        <span className="mr-2">📸</span> Upload Evidence
+        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+            {/* Animated Background Blobs */}
+            <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+
+            <div className="max-w-lg w-full glass-card relative z-10 border border-white/20">
+                <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-white flex items-center drop-shadow-md">
+                        <span className="mr-3 text-3xl">📸</span> Upload Evidence
                     </h2>
                     <button
                         onClick={() => navigate('/dashboard')}
-                        className="text-white hover:bg-green-700 p-2 rounded-full transition-colors"
+                        className="text-white/70 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all"
                     >
                         ✕
                     </button>
                 </div>
 
-                <form onSubmit={handleUpload} className="p-6 space-y-6">
+                <form onSubmit={handleUpload} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Select Society</label>
-                        <select
-                            value={selectedSocietyId}
-                            onChange={(e) => setSelectedSocietyId(e.target.value)}
-                            required
-                            className="block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-md border"
-                        >
-                            <option value="">-- Helper Text --</option>
-                            {societies.map((s) => (
-                                <option key={s.id} value={s.id}>{s.name}</option>
-                            ))}
-                        </select>
+                        <label className="block text-xs font-bold text-blue-100 uppercase tracking-widest mb-2 ml-1">Select Society</label>
+                        <div className="relative">
+                            <select
+                                value={selectedSocietyId}
+                                onChange={(e) => setSelectedSocietyId(e.target.value)}
+                                required
+                                className="block w-full input-glass appearance-none cursor-pointer"
+                            >
+                                <option value="" className="text-gray-800">-- Select Society --</option>
+                                {societies.map((s) => (
+                                    <option key={s.id} value={s.id} className="text-gray-800">{s.name}</option>
+                                ))}
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white/50">
+                                <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+                            </div>
+                        </div>
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Capture Photo</label>
-                        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-green-500 transition-colors cursor-pointer relative">
+                        <label className="block text-xs font-bold text-blue-100 uppercase tracking-widest mb-2 ml-1">Evidence Photo</label>
+                        <div className="mt-1 flex justify-center px-6 pt-8 pb-8 border-2 border-dashed border-white/20 rounded-2xl hover:border-green-400/50 hover:bg-white/5 transition-all cursor-pointer relative group">
                             <input
                                 type="file"
                                 accept="image/*"
                                 capture="environment"
                                 onChange={handleImageChange}
                                 required
-                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
                             />
-                            <div className="space-y-1 text-center">
-                                <svg
-                                    className="mx-auto h-12 w-12 text-gray-400"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 48 48"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                        strokeWidth={2}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                                <div className="flex text-sm text-gray-600">
-                                    <span className="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500">
-                                        Take a photo
-                                    </span>
-                                    <p className="pl-1">or drag and drop</p>
+                            <div className="space-y-2 text-center relative z-10">
+                                <div className="mx-auto h-16 w-16 bg-white/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <svg className="h-8 w-8 text-white/80" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
                                 </div>
-                                <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                <div className="text-sm text-blue-100 font-medium">
+                                    Tap to Capture
+                                </div>
+                                <p className="text-xs text-blue-200/60">Geo-tagging enabled</p>
                             </div>
                         </div>
                     </div>
 
                     {previewUrl && (
-                        <div className="relative rounded-lg overflow-hidden border border-gray-200">
-                            <img src={previewUrl} alt="Preview" className="w-full h-48 object-cover" />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-10 transition-opacity pointer-events-none"></div>
+                        <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-lg">
+                            <img src={previewUrl} alt="Preview" className="w-full h-56 object-cover" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
                         </div>
                     )}
 
-                    <div className={`rounded-md p-4 ${location ? (isWithinRange ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200') : 'bg-gray-100'
-                        }`}>
-                        <div className="flex">
+                    <div className={`rounded-xl p-4 backdrop-blur-md border transition-all ${location ? (isWithinRange ? 'bg-emerald-500/20 border-emerald-500/30' : 'bg-red-500/20 border-red-500/30') : 'bg-white/5 border-white/10'}`}>
+                        <div className="flex items-center">
                             <div className="flex-shrink-0">
                                 {location ? (
                                     isWithinRange ? (
-                                        <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                        </svg>
+                                        <div className="h-10 w-10 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-300 animate-pulse">
+                                            <svg className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                        </div>
                                     ) : (
-                                        <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                        </svg>
+                                        <div className="h-10 w-10 bg-red-500/20 rounded-full flex items-center justify-center text-red-300">
+                                            <svg className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" /></svg>
+                                        </div>
                                     )
                                 ) : (
-                                    <svg className="h-5 w-5 text-gray-400 animate-pulse" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                                    </svg>
+                                    <div className="h-10 w-10 bg-white/10 rounded-full flex items-center justify-center text-white/50">
+                                        <svg className="h-6 w-6 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle className="opacity-25" cx="12" cy="12" r="10" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                    </div>
                                 )}
                             </div>
-                            <div className="ml-3">
+                            <div className="ml-4">
                                 {location ? (
                                     <>
-                                        <h3 className={`text-sm font-medium ${isWithinRange ? 'text-green-800' : 'text-red-800'}`}>
-                                            Location Captured
+                                        <h3 className={`text-sm font-bold ${isWithinRange ? 'text-emerald-300' : 'text-red-300'}`}>
+                                            {isWithinRange ? 'Location Verified' : 'Location Check Failed'}
                                         </h3>
-                                        <div className={`mt-2 text-sm ${isWithinRange ? 'text-green-700' : 'text-red-700'}`}>
-                                            <p>Coords: {location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}</p>
+                                        <div className={`mt-1 text-xs font-mono opacity-80 ${isWithinRange ? 'text-emerald-100' : 'text-red-100'}`}>
                                             {distance !== null && (
-                                                <p className="font-bold mt-1">
-                                                    Distance: {distance.toFixed(0)}m
-                                                    {!isWithinRange && " (Too far! Max 50m)"}
-                                                </p>
+                                                <span>Distance: {distance.toFixed(0)}m {isWithinRange ? '✅' : '(>50m) ❌'}</span>
                                             )}
                                         </div>
                                     </>
                                 ) : locationError ? (
-                                    <h3 className="text-sm font-medium text-red-800">{locationError}</h3>
+                                    <h3 className="text-sm font-bold text-red-300">{locationError}</h3>
                                 ) : (
-                                    <h3 className="text-sm font-medium text-gray-800">Waiting for location...</h3>
+                                    <h3 className="text-sm font-bold text-white/70">Acquiring Satellites...</h3>
                                 )}
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex flex-col space-y-3">
+                    <div className="flex flex-col space-y-3 pt-2">
                         <button
                             type="submit"
                             disabled={uploading || !location || (distance !== null && !isWithinRange)}
-                            className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors ${(uploading || !location || (distance !== null && !isWithinRange)) ? 'opacity-50 cursor-not-allowed' : ''
+                            className={`w-full btn-glass bg-gradient-to-r from-green-400 to-emerald-600 border-0 shadow-lg shadow-green-500/20 ${(uploading || !location || (distance !== null && !isWithinRange)) ? 'opacity-50 cursor-not-allowed grayscale' : 'hover:scale-105'
                                 }`}
                         >
-                            {uploading ? 'Uploading Evidence...' : 'Submit Claims'}
+                            {uploading ? 'Transmitting Data...' : 'Submit Claim'}
                         </button>
                     </div>
                 </form>
