@@ -26,12 +26,34 @@ const Login = () => {
 
         try {
             if (isSignUp) {
-                const { error } = await supabase.auth.signUp({
+                const { data, error } = await supabase.auth.signUp({
                     email,
                     password,
                 });
                 if (error) throw error;
-                setMessage('Sign up successful! You can now sign in (or check email if confirmation is enabled).');
+
+                // Manual Profile Creation (Fallback since Trigger is removed)
+                if (data?.user) {
+                    try {
+                        const { error: profileError } = await supabase
+                            .from('profiles')
+                            .insert([
+                                { id: data.user.id, role: 'user' }
+                            ]);
+
+                        if (profileError) {
+                            console.warn("Profile creation warning:", profileError);
+                            // Verify if it's just a duplicate (ignore if so)
+                            if (profileError.code !== '23505') {
+                                // Don't block flow, but log it
+                            }
+                        }
+                    } catch (err) {
+                        console.error("Manual profile check failed", err);
+                    }
+                }
+
+                setMessage('Sign up successful! Please check your email to confirm your account.');
                 setIsSignUp(false);
             } else {
                 const { error } = await supabase.auth.signInWithPassword({
