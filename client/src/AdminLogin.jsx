@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const AdminLogin = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
@@ -20,7 +21,7 @@ const AdminLogin = () => {
                     .single();
 
                 if (profile?.role === 'admin') {
-                    navigate('/admin');
+                    navigate('/admin-dashboard'); // Redirect to Admin Dashboard
                 } else {
                     // If logged in but not admin, sign out or redirect
                     await supabase.auth.signOut();
@@ -36,17 +37,19 @@ const AdminLogin = () => {
         setLoading(true);
         setMessage('');
 
-        // For Admin, we'll use Magic Link too, but we need to ensure they have the role
-        // Since we can't check role *before* login easily without a cloud function,
-        // we'll rely on the useEffect check after they click the link.
-        const { error } = await supabase.auth.signInWithOtp({ email });
+        try {
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
 
-        if (error) {
+            if (error) throw error;
+            // Navigation handled by useEffect
+        } catch (error) {
             setMessage('Error: ' + error.message);
-        } else {
-            setMessage('Check your email for the admin login link!');
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     return (
@@ -74,12 +77,25 @@ const AdminLogin = () => {
                         />
                     </div>
 
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            required
+                            className="block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 outline-none"
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+
                     <button
                         type="submit"
                         disabled={loading}
                         className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                     >
-                        {loading ? 'Sending Link...' : 'Login as Admin'}
+                        {loading ? 'Authenticating...' : 'Login as Admin'}
                     </button>
                 </form>
 
