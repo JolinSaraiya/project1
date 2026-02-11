@@ -132,7 +132,7 @@ const Login = () => {
                         <button
                             type="button"
                             onClick={() => setIsSignUp(!isSignUp)}
-                            className="text-purple-400 hover:text-purple-300 text-sm transition-colors"
+                            className="text-teal-400 hover:text-teal-300 text-sm transition-colors"
                         >
                             {isSignUp ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
                         </button>
@@ -142,7 +142,7 @@ const Login = () => {
                         <button
                             type="button"
                             onClick={() => navigate('/admin-login')}
-                            className="text-pink-400 hover:text-pink-300 text-sm transition-colors"
+                            className="text-cyan-400 hover:text-cyan-300 text-sm transition-colors"
                         >
                             Admin Login →
                         </button>
