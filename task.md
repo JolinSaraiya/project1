@@ -83,3 +83,8 @@
 - [x] Create Database Trigger for Automatic Profile Creation <!-- id: 90 -->
 - [x] Verify Server Connectivity <!-- id: 91 -->
 - [ ] Final Deployment Prep <!-- id: 92 -->
+
+## Phase 10: Running Locally
+- [x] Verify Servers Running <!-- id: 100 -->
+    - [x] Backend (Port 5000) <!-- id: 101 -->
+    - [x] Frontend (Port 5174) <!-- id: 102 -->
