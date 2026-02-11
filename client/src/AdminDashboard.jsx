@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { useNavigate } from 'react-router-dom';
+import CONFIG from './config';
 
 const AdminDashboard = ({ session }) => {
     const navigate = useNavigate();
@@ -111,7 +112,7 @@ const AdminDashboard = ({ session }) => {
                 if (fetchError) throw fetchError;
 
                 const currentTax = societyData.tax_amount;
-                const discount = currentTax * 0.05;
+                const discount = currentTax * CONFIG.TAX_DISCOUNT_RATE;
                 const newTax = currentTax - discount;
 
                 const { error: taxError } = await supabase

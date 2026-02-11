@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { useNavigate, useLocation } from 'react-router-dom';
 import EXIF from 'exif-js';
+import CONFIG from './config';
 
 const Upload = ({ session }) => {
     const navigate = useNavigate();
@@ -135,14 +136,14 @@ const Upload = ({ session }) => {
 
             // 1. Upload Image to Storage
             const { error: uploadError } = await supabase.storage
-                .from('compost-evidence')
+                .from(CONFIG.STORAGE_BUCKET)
                 .upload(filePath, image);
 
             if (uploadError) throw uploadError;
 
             // 2. Get Public URL
             const { data: { publicUrl } } = supabase.storage
-                .from('compost-evidence')
+                .from(CONFIG.STORAGE_BUCKET)
                 .getPublicUrl(filePath);
 
             // 3. Insert Record into Database
