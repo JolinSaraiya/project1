@@ -133,21 +133,46 @@ const AdminDashboard = ({ session }) => {
     };
 
     const seedSocieties = async () => {
-        if (!confirm("Add default societies for testing?")) return;
+        const societyName = prompt("Enter society name:");
+        if (!societyName) return;
+
+        const societyAddress = prompt("Enter society address:");
+        if (!societyAddress) return;
+
+        const latitude = parseFloat(prompt("Enter latitude:"));
+        if (isNaN(latitude)) {
+            alert("Invalid latitude");
+            return;
+        }
+
+        const longitude = parseFloat(prompt("Enter longitude:"));
+        if (isNaN(longitude)) {
+            alert("Invalid longitude");
+            return;
+        }
+
+        const taxAmount = parseFloat(prompt("Enter tax amount (₹):"));
+        if (isNaN(taxAmount)) {
+            alert("Invalid tax amount");
+            return;
+        }
 
         try {
-            const defaults = [
-                { name: "Green Heights", address: "123 Eco Street, Mumbai", latitude: 19.0760, longitude: 72.8777, tax_amount: 50000 },
-                { name: "Eco Residency", address: "456 Palm Grove, Pune", latitude: 18.5204, longitude: 73.8567, tax_amount: 75000 },
-                { name: "Sustainable Living", address: "789 Solar Ave, Delhi", latitude: 28.7041, longitude: 77.1025, tax_amount: 100000 }
-            ];
+            const newSociety = {
+                name: societyName,
+                address: societyAddress,
+                latitude: latitude,
+                longitude: longitude,
+                tax_amount: taxAmount
+            };
 
-            const { error } = await supabase.from('societies').insert(defaults);
+            const { error } = await supabase.from('societies').insert([newSociety]);
             if (error) throw error;
-            alert("Default societies added!");
+            alert("Society added successfully!");
+            fetchSocieties();
         } catch (error) {
-            console.error("Error seeding:", error.message);
-            alert("Seeding failed: " + error.message);
+            console.error("Error adding society:", error.message);
+            alert("Failed to add society: " + error.message);
         }
     };
 
@@ -165,7 +190,7 @@ const AdminDashboard = ({ session }) => {
                             onClick={seedSocieties}
                             className="bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-500/30 px-4 py-2 rounded-xl text-sm font-bold transition-all"
                         >
-                            🌱 Seed Data
+                            ➕ Add Society
                         </button>
                         <button
                             onClick={() => navigate('/login')}
