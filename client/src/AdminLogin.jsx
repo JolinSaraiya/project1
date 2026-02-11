@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { useNavigate } from 'react-router-dom';
+import { SparklesText } from './components/SparklesText';
 
 const AdminLogin = () => {
     const navigate = useNavigate();
@@ -10,10 +11,8 @@ const AdminLogin = () => {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
             if (session) {
-                // Check if admin
                 const { data: profile } = await supabase
                     .from('profiles')
                     .select('role')
@@ -21,15 +20,14 @@ const AdminLogin = () => {
                     .single();
 
                 if (profile?.role === 'admin') {
-                    navigate('/admin'); // Redirect to Admin Dashboard
+                    navigate('/admin');
                 } else {
-                    // If logged in but not admin, sign out or redirect
+                    setMessage('Access denied: Admin privileges required');
                     await supabase.auth.signOut();
-                    setMessage("Access Denied: You are not an admin.");
                 }
             }
-        };
-        checkSession();
+        });
+        return () => subscription.unsubscribe();
     }, [navigate]);
 
     const handleLogin = async (e) => {
@@ -38,78 +36,96 @@ const AdminLogin = () => {
         setMessage('');
 
         try {
-            const { error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
 
             if (error) throw error;
-            // Navigation handled by useEffect
+
+            const { data: profile } = await supabase
+                .from('profiles')
+                .select('role')
+                .eq('id', data.user.id)
+                .single();
+
+            if (profile?.role !== 'admin') {
+                await supabase.auth.signOut();
+                setMessage('Access denied: Admin privileges required');
+            }
         } catch (error) {
-            setMessage('Error: ' + error.message);
+            setMessage(error.message);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-900">
-            <div className="max-w-md w-full bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-700">
+        <div className="min-h-screen flex items-center justify-center p-4">
+            <div className="max-w-md w-full modern-card">
                 <div className="text-center mb-8">
-                    <div className="mx-auto h-16 w-16 bg-red-900 rounded-full flex items-center justify-center mb-4">
-                        <span className="text-3xl">🛡️</span>
-                    </div>
-                    <h1 className="text-3xl font-extrabold text-white">Admin Portal</h1>
-                    <p className="text-gray-400 mt-2">Authorized Personnel Only</p>
+                    <SparklesText
+                        text="Admin Access"
+                        className="text-5xl mb-2"
+                        colors={{ first: "#FE8BBB", second: "#9E7AFF" }}
+                        sparklesCount={10}
+                    />
+                    <p className="text-gray-400 mt-4">🔐 Authorized Personnel Only</p>
                 </div>
 
-                <form onSubmit={handleLogin} className="space-y-6">
+                <form onSubmit={handleLogin} className="space-y-4">
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Admin Email</label>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                            Admin Email
+                        </label>
                         <input
-                            id="email"
                             type="email"
-                            required
-                            className="block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 outline-none"
-                            placeholder="admin@greentax.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            className="modern-input w-full"
+                            placeholder="admin@greentax.com"
+                            required
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                            Password
+                        </label>
                         <input
-                            id="password"
                             type="password"
-                            required
-                            className="block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 outline-none"
-                            placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            className="modern-input w-full"
+                            placeholder="Enter admin password"
+                            required
                         />
                     </div>
+
+                    {message && (
+                        <div className="p-3 rounded-lg text-sm bg-red-500/20 text-red-300 border border-red-500/30">
+                            {message}
+                        </div>
+                    )}
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                        className="btn-primary w-full"
                     >
-                        {loading ? 'Authenticating...' : 'Login as Admin'}
+                        {loading ? 'Authenticating...' : 'Admin Login'}
                     </button>
-                </form>
 
-                {message && (
-                    <div className={`mt-6 p-4 rounded-lg text-center text-sm font-medium ${message.includes('Error') || message.includes('Denied') ? 'bg-red-900/50 text-red-200 border border-red-800' : 'bg-blue-900/50 text-blue-200 border border-blue-800'}`}>
-                        {message}
+                    <div className="text-center pt-4 border-t border-slate-700">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/login')}
+                            className="text-purple-400 hover:text-purple-300 text-sm transition-colors"
+                        >
+                            ← Back to User Login
+                        </button>
                     </div>
-                )}
-
-                <div className="mt-6 text-center">
-                    <button onClick={() => navigate('/login')} className="text-gray-500 hover:text-white text-sm transition-colors">
-                        ← Back to User Login
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     );

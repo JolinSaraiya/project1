@@ -1,62 +1,36 @@
 @import "tailwindcss";
 
 @layer components {
-  .glass {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl;
+
+  /* Modern Card Styles - Replacing Glassmorphism */
+  .modern-card {
+    @apply bg-slate-800/90 border border-slate-700/50 shadow-2xl rounded-2xl p-6 transition-all duration-300 hover:shadow-purple-500/20 hover:border-purple-500/30;
   }
 
-  .glass-dark {
-    @apply bg-black/30 backdrop-blur-xl border border-white/10 shadow-xl;
+  .modern-input {
+    @apply bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all;
   }
 
-  .glass-card {
-    @apply rounded-3xl p-6 transition-all duration-300 hover:shadow-2xl hover:bg-white/15;
-  }
-
-  .input-glass {
-    @apply bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:bg-white/10 transition-all;
-  }
-
-  .btn-glass {
-    @apply bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 rounded-xl backdrop-blur-md border border-white/20 transition-all active:scale-95 shadow-lg hover:shadow-green-500/20;
+  .modern-btn {
+    @apply bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-6 rounded-xl transition-all active:scale-95 shadow-lg hover:shadow-purple-500/20;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-green-400 to-emerald-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-green-500/30 hover:shadow-green-500/50 hover:scale-105 active:scale-95 transition-all;
+    @apply bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-105 active:scale-95 transition-all;
+  }
+
+  .btn-success {
+    @apply bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-green-500/30 hover:shadow-green-500/50 hover:scale-105 active:scale-95 transition-all;
   }
 }
 
 body {
   @apply text-white min-h-screen font-sans antialiased;
-  background: radial-gradient(circle at 50% 10%, #4ade80, transparent 40%),
-    radial-gradient(circle at 90% 60%, #3b82f6, transparent 40%),
-    radial-gradient(circle at 10% 60%, #f472b6, transparent 40%);
-  background-color: #0f172a;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+  background-attachment: fixed;
 }
 
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
-.animate-blob {
-  animation: blob 7s infinite;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-  animation-delay: 4s;
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
