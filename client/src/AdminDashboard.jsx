@@ -188,7 +188,7 @@ const AdminDashboard = ({ session }) => {
                             <SparklesText
                                 text="Admin Console"
                                 className="text-2xl"
-                                colors={{ first: "#FE8BBB", second: "#9E7AFF" }}
+                                colors={{ first: "#06b6d4", second: "#14b8a6" }}
                                 sparklesCount={6}
                             />
                         </div>
@@ -215,7 +215,7 @@ const AdminDashboard = ({ session }) => {
                 <div className="modern-card">
                     <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                         <span>🏘️</span>
-                        <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
                             Society Management
                         </span>
                     </h2>
@@ -258,7 +258,7 @@ const AdminDashboard = ({ session }) => {
                                                     <button
                                                         onClick={() => verifySociety(society.id)}
                                                         disabled={verifying === society.id}
-                                                        className="bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/30 px-4 py-2 rounded-lg text-sm font-bold transition-all disabled:opacity-50"
+                                                        className="bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 border border-teal-500/30 px-4 py-2 rounded-lg text-sm font-bold transition-all disabled:opacity-50"
                                                     >
                                                         {verifying === society.id ? 'Verifying...' : '✓ Verify'}
                                                     </button>
@@ -276,7 +276,7 @@ const AdminDashboard = ({ session }) => {
                 <div className="modern-card">
                     <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                         <span>📋</span>
-                        <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
                             Waste Disposal Logs
                         </span>
                     </h2>
@@ -293,7 +293,7 @@ const AdminDashboard = ({ session }) => {
                     ) : (
                         <div className="space-y-4">
                             {logs.map((log) => (
-                                <div key={log.id} className="bg-slate-900/50 border border-slate-700 rounded-xl p-6 hover:border-purple-500/30 transition-colors">
+                                <div key={log.id} className="bg-slate-900/50 border border-slate-700 rounded-xl p-6 hover:border-teal-500/30 transition-colors">
                                     <div className="flex flex-col lg:flex-row gap-6">
                                         {/* Image */}
                                         <div className="lg:w-1/3">
@@ -325,10 +325,10 @@ const AdminDashboard = ({ session }) => {
                                             <div className="flex items-center gap-2">
                                                 <span className="text-gray-400 text-sm">Status:</span>
                                                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${log.status === 'approved'
-                                                        ? 'bg-green-500/20 text-green-300 border border-green-500/30'
-                                                        : log.status === 'rejected'
-                                                            ? 'bg-red-500/20 text-red-300 border border-red-500/30'
-                                                            : 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30'
+                                                    ? 'bg-green-500/20 text-green-300 border border-green-500/30'
+                                                    : log.status === 'rejected'
+                                                        ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                                                        : 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30'
                                                     }`}>
                                                     {log.status === 'approved' ? '✓ Approved' : log.status === 'rejected' ? '✗ Rejected' : '⏳ Pending'}
                                                 </span>

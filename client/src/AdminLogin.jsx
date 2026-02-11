@@ -67,7 +67,7 @@ const AdminLogin = () => {
                     <SparklesText
                         text="Admin Access"
                         className="text-5xl mb-2"
-                        colors={{ first: "#FE8BBB", second: "#9E7AFF" }}
+                        colors={{ first: "#06b6d4", second: "#14b8a6" }}
                         sparklesCount={10}
                     />
                     <p className="text-gray-400 mt-4">🔐 Authorized Personnel Only</p>

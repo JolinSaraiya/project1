@@ -173,7 +173,7 @@ const Upload = ({ session }) => {
                     <SparklesText
                         text="Upload Evidence"
                         className="text-4xl mb-2"
-                        colors={{ first: "#9E7AFF", second: "#FE8BBB" }}
+                        colors={{ first: "#14b8a6", second: "#06b6d4" }}
                         sparklesCount={8}
                     />
                     <p className="text-gray-400 mt-4">📸 Submit your waste disposal proof</p>

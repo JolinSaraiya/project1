@@ -76,7 +76,7 @@ const Login = () => {
                     <SparklesText
                         text="Green-Tax"
                         className="text-5xl mb-2"
-                        colors={{ first: "#9E7AFF", second: "#FE8BBB" }}
+                        colors={{ first: "#14b8a6", second: "#06b6d4" }}
                         sparklesCount={8}
                     />
                     <p className="text-gray-400 mt-4">Sustainable Living, Rewarded</p>
@@ -113,8 +113,8 @@ const Login = () => {
 
                     {message && (
                         <div className={`p-3 rounded-lg text-sm ${message.includes('successful')
-                                ? 'bg-green-500/20 text-green-300 border border-green-500/30'
-                                : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                            ? 'bg-green-500/20 text-green-300 border border-green-500/30'
+                            : 'bg-red-500/20 text-red-300 border border-red-500/30'
                             }`}>
                             {message}
                         </div>

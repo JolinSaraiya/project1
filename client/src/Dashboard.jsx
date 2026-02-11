@@ -99,7 +99,7 @@ const Dashboard = ({ session }) => {
                             <SparklesText
                                 text="Green-Tax"
                                 className="text-2xl"
-                                colors={{ first: "#9E7AFF", second: "#FE8BBB" }}
+                                colors={{ first: "#14b8a6", second: "#06b6d4" }}
                                 sparklesCount={5}
                             />
                         </div>
@@ -107,7 +107,7 @@ const Dashboard = ({ session }) => {
                             <button
                                 onClick={fetchSocieties}
                                 disabled={loading}
-                                className="text-purple-300 hover:text-purple-200 hover:bg-purple-500/20 px-3 py-2 rounded-xl text-sm font-bold transition-all flex items-center space-x-2"
+                                className="text-teal-300 hover:text-teal-200 hover:bg-teal-500/20 px-3 py-2 rounded-xl text-sm font-bold transition-all flex items-center space-x-2"
                                 title="Refresh societies"
                             >
                                 <span className={loading ? 'animate-spin' : ''}>🔄</span>
@@ -132,7 +132,7 @@ const Dashboard = ({ session }) => {
                 <div className="modern-card">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
-                            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                            <h1 className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
                                 Welcome to Your Dashboard
                             </h1>
                             <p className="text-gray-400 mt-2">Manage your societies and track your green rewards</p>
@@ -150,7 +150,7 @@ const Dashboard = ({ session }) => {
                 <div className="modern-card">
                     <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                         <span>🏘️</span>
-                        <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
                             Your Societies
                         </span>
                     </h2>
@@ -198,7 +198,7 @@ const Dashboard = ({ session }) => {
                                                 {society.is_verified ? (
                                                     <button
                                                         onClick={() => navigate('/upload', { state: { societyId: society.id } })}
-                                                        className="bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/30 px-4 py-2 rounded-lg text-sm font-bold transition-all"
+                                                        className="bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 border border-teal-500/30 px-4 py-2 rounded-lg text-sm font-bold transition-all"
                                                     >
                                                         📤 Upload Evidence
                                                     </button>
