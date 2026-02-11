@@ -35,7 +35,7 @@ const Dashboard = ({ session }) => {
             const { data, error } = await supabase
                 .from('societies')
                 .select('*')
-                .or(`user_id.eq.${session.user.id},user_id.is.null`);
+                .eq('user_id', session.user.id);
             if (error) throw error;
             setSocieties(data || []);
         } catch (error) {
