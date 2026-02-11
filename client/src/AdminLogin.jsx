@@ -21,7 +21,7 @@ const AdminLogin = () => {
                     .single();
 
                 if (profile?.role === 'admin') {
-                    navigate('/admin-dashboard'); // Redirect to Admin Dashboard
+                    navigate('/admin'); // Redirect to Admin Dashboard
                 } else {
                     // If logged in but not admin, sign out or redirect
                     await supabase.auth.signOut();

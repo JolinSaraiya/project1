@@ -71,46 +71,46 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-            {/* Animated Background Blobs - Cosmic Glass Theme */}
-            <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
-            <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-fuchsia-600 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
-            <div className="absolute -bottom-32 left-20 w-96 h-96 bg-sky-600 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', position: 'relative', overflow: 'hidden' }}>
+            {/* Animated Background Blobs */}
+            <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '24rem', height: '24rem', background: '#4f46e5', borderRadius: '9999px', mixBlendMode: 'multiply', filter: 'blur(64px)', opacity: 0.4 }} className="animate-blob"></div>
+            <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '24rem', height: '24rem', background: '#c026d3', borderRadius: '9999px', mixBlendMode: 'multiply', filter: 'blur(64px)', opacity: 0.4 }} className="animate-blob animation-delay-2000"></div>
+            <div style={{ position: 'absolute', bottom: '-8rem', left: '5rem', width: '24rem', height: '24rem', background: '#0284c7', borderRadius: '9999px', mixBlendMode: 'multiply', filter: 'blur(64px)', opacity: 0.4 }} className="animate-blob animation-delay-4000"></div>
 
-            <div className="max-w-md w-full glass rounded-3xl p-8 relative z-10 border-t border-l border-white/20 shadow-2xl backdrop-blur-3xl">
-                <div className="text-center mb-8">
-                    <div className="mx-auto h-20 w-20 glass rounded-2xl flex items-center justify-center mb-4 shadow-lg rotate-3 hover:rotate-0 transition-all duration-500 border border-fuchsia-400/30">
-                        <span className="text-4xl filter drop-shadow-lg">🌱</span>
+            <div style={{ maxWidth: '28rem', width: '100%', background: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(48px)', borderRadius: '1.5rem', padding: '2rem', position: 'relative', zIndex: 10, border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
+                <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                    <div style={{ margin: '0 auto', height: '5rem', width: '5rem', background: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(48px)', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', transform: 'rotate(3deg)', transition: 'all 0.5s', border: '1px solid rgba(192, 38, 211, 0.3)' }}>
+                        <span style={{ fontSize: '2.25rem', filter: 'drop-shadow(0 10px 8px rgba(0, 0, 0, 0.04))' }}>🌱</span>
                     </div>
-                    <h1 className="text-3xl font-black tracking-tight text-white drop-shadow-md bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 via-fuchsia-200 to-sky-200">
+                    <h1 style={{ fontSize: '1.875rem', fontWeight: 900, letterSpacing: '-0.025em', color: 'white', filter: 'drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07))', background: 'linear-gradient(to right, #c7d2fe, #f5d0fe, #bae6fd)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                         Green-Tax
                     </h1>
-                    <p className="text-indigo-100 font-medium mt-2 tracking-wide text-sm opacity-80">
+                    <p style={{ color: '#c7d2fe', fontWeight: 500, marginTop: '0.5rem', letterSpacing: '0.025em', fontSize: '0.875rem', opacity: 0.8 }}>
                         Cosmic Rewards Portal
                     </p>
                 </div>
 
-                <form onSubmit={handleAuth} className="space-y-5">
-                    <div className="space-y-1">
-                        <label htmlFor="email" className="block text-xs font-bold text-indigo-100 uppercase tracking-widest ml-1">Email</label>
+                <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                        <label htmlFor="email" style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#c7d2fe', textTransform: 'uppercase', letterSpacing: '0.1em', marginLeft: '0.25rem' }}>Email</label>
                         <input
                             id="email"
                             type="email"
                             required
-                            className="w-full input-glass focus:ring-fuchsia-400/50"
+                            style={{ width: '100%', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '0.75rem', padding: '0.75rem 1rem', color: 'white', outline: 'none' }}
                             placeholder="citizen@future.city"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
-                    <div className="space-y-1">
-                        <label htmlFor="password" className="block text-xs font-bold text-indigo-100 uppercase tracking-widest ml-1">Password</label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                        <label htmlFor="password" style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#c7d2fe', textTransform: 'uppercase', letterSpacing: '0.1em', marginLeft: '0.25rem' }}>Password</label>
                         <input
                             id="password"
                             type="password"
                             required
-                            className="w-full input-glass focus:ring-fuchsia-400/50"
+                            style={{ width: '100%', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '0.75rem', padding: '0.75rem 1rem', color: 'white', outline: 'none' }}
                             placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -120,38 +120,30 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`w-full btn-glass mt-4 bg-gradient-to-r from-indigo-500/30 to-fuchsia-500/30 hover:from-indigo-500/50 hover:to-fuchsia-500/50 border-white/20 ${loading ? 'opacity-70 cursor-wait' : ''}`}
+                        style={{ width: '100%', marginTop: '1rem', background: 'linear-gradient(to right, rgba(79, 70, 229, 0.3), rgba(192, 38, 211, 0.3))', color: 'white', fontWeight: 700, padding: '0.75rem 1.5rem', borderRadius: '0.75rem', backdropFilter: 'blur(12px)', border: '1px solid rgba(255, 255, 255, 0.2)', transition: 'all 0.3s', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', cursor: loading ? 'wait' : 'pointer', opacity: loading ? 0.7 : 1 }}
                     >
-                        {loading ? (
-                            <span className="flex items-center justify-center">
-                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-fuchsia-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                Authenticating...
-                            </span>
-                        ) : (isSignUp ? 'Initialize Identity' : 'Access Portal')}
+                        {loading ? 'Authenticating...' : (isSignUp ? 'Initialize Identity' : 'Access Portal')}
                     </button>
                 </form>
 
                 {message && (
-                    <div className={`mt-6 p-4 rounded-xl text-center text-sm font-bold backdrop-blur-md border ${message.includes('Error') ? 'bg-red-500/20 border-red-500/30 text-red-100' : 'bg-indigo-500/20 border-indigo-500/30 text-indigo-100'}`}>
+                    <div style={{ marginTop: '1.5rem', padding: '1rem', borderRadius: '0.75rem', textAlign: 'center', fontSize: '0.875rem', fontWeight: 700, backdropFilter: 'blur(12px)', border: '1px solid', background: message.includes('Error') ? 'rgba(239, 68, 68, 0.2)' : 'rgba(79, 70, 229, 0.2)', borderColor: message.includes('Error') ? 'rgba(239, 68, 68, 0.3)' : 'rgba(79, 70, 229, 0.3)', color: message.includes('Error') ? '#fecaca' : '#c7d2fe' }}>
                         {message}
                     </div>
                 )}
 
-                <div className="mt-6 text-center">
+                <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
                     <button
                         type="button"
                         onClick={() => { setIsSignUp(!isSignUp); setMessage(''); }}
-                        className="text-sm text-fuchsia-200/70 hover:text-white font-medium transition-colors hover:scale-105 transform duration-200"
+                        style={{ fontSize: '0.875rem', color: 'rgba(245, 208, 254, 0.7)', fontWeight: 500, transition: 'all 0.2s', background: 'none', border: 'none', cursor: 'pointer' }}
                     >
                         {isSignUp ? 'Already verified? Access Portal' : 'New Citizen? Initialize Identity'}
                     </button>
                 </div>
 
-                <div className="mt-8 text-center border-t border-white/10 pt-4">
-                    <button onClick={() => navigate('/admin-login')} className="text-xs text-indigo-200/40 hover:text-indigo-200 font-bold uppercase tracking-widest transition-all">
+                <div style={{ marginTop: '2rem', textAlign: 'center', borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '1rem' }}>
+                    <button onClick={() => navigate('/admin-login')} style={{ fontSize: '0.75rem', color: 'rgba(199, 210, 254, 0.4)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'all 0.3s', background: 'none', border: 'none', cursor: 'pointer' }}>
                         Admin Console Access
                     </button>
                 </div>

@@ -130,7 +130,7 @@ const Upload = ({ session }) => {
         setUploading(true);
         try {
             const fileExt = image.name.split('.').pop();
-            const fileName = `${Math.random()}.${fileExt}`;
+            const fileName = `${crypto.randomUUID()}.${fileExt}`;
             const filePath = `${fileName}`;
 
             // 1. Upload Image to Storage

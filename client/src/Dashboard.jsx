@@ -6,11 +6,21 @@ const Dashboard = ({ session }) => {
     const navigate = useNavigate();
     const [societies, setSocieties] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [newSocietyName, setNewSocietyName] = useState('');
-    const [newSocietyAddress, setNewSocietyAddress] = useState('');
 
     useEffect(() => {
         fetchSocieties();
+
+        // Auto-refresh when window regains focus
+        const handleFocus = () => {
+            console.log('Window focused, refreshing societies...');
+            fetchSocieties();
+        };
+
+        window.addEventListener('focus', handleFocus);
+
+        return () => {
+            window.removeEventListener('focus', handleFocus);
+        };
     }, []);
 
     const handleLogout = async () => {
@@ -31,34 +41,7 @@ const Dashboard = ({ session }) => {
         }
     };
 
-    const handleCreateSociety = async (e) => {
-        e.preventDefault();
-        try {
-            const latitude = 19.0760;
-            const longitude = 72.8777;
 
-            const { error } = await supabase
-                .from('societies')
-                .insert([{
-                    name: newSocietyName,
-                    address: newSocietyAddress,
-                    latitude,
-                    longitude,
-                    user_id: session.user.id, // Link society to this user
-                    is_verified: false // Default to unverified
-                }]);
-
-            if (error) throw error;
-
-            setNewSocietyName('');
-            setNewSocietyAddress('');
-            fetchSocieties();
-            alert('Society registered successfully! Please wait for Admin Verification.');
-        } catch (error) {
-            console.error('Error creating society:', error.message);
-            alert('Error creating society.');
-        }
-    };
 
     return (
         <div className="min-h-screen">
@@ -71,6 +54,15 @@ const Dashboard = ({ session }) => {
                             <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-emerald-200 to-teal-400 tracking-tight">Green-Tax</span>
                         </div>
                         <div className="flex items-center space-x-4">
+                            <button
+                                onClick={fetchSocieties}
+                                disabled={loading}
+                                className="text-blue-200 hover:text-blue-100 hover:bg-blue-500/20 px-3 py-2 rounded-xl text-sm font-bold transition-all flex items-center space-x-2"
+                                title="Refresh societies"
+                            >
+                                <span className={loading ? 'animate-spin' : ''}>🔄</span>
+                                <span className="hidden md:inline">Refresh</span>
+                            </button>
                             <span className="hidden md:block text-sm text-blue-200 bg-white/5 px-4 py-2 rounded-full border border-white/10">
                                 {session?.user?.email}
                             </span>

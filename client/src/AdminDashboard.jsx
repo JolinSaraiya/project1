@@ -7,6 +7,7 @@ const AdminDashboard = ({ session }) => {
     const [logs, setLogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [societies, setSocieties] = useState([]);
+    const [verifying, setVerifying] = useState(null); // Track which society is being verified
 
     useEffect(() => {
         fetchLogs();
@@ -14,27 +15,57 @@ const AdminDashboard = ({ session }) => {
     }, []);
 
     const fetchSocieties = async () => {
-        const { data } = await supabase
-            .from('societies')
-            .select('*')
-            .order('created_at', { ascending: false });
-        setSocieties(data || []);
+        try {
+            console.log('Fetching societies...');
+            const { data, error } = await supabase
+                .from('societies')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Error fetching societies:', error);
+                throw error;
+            }
+
+            console.log('Societies fetched:', data?.length || 0);
+            setSocieties(data || []);
+            return data;
+        } catch (error) {
+            console.error('Failed to fetch societies:', error.message);
+            alert('Failed to load societies: ' + error.message);
+            return [];
+        }
     };
 
     const verifySociety = async (id) => {
         if (!confirm("Verify this society? Users will be able to upload evidence.")) return;
+
+        setVerifying(id); // Set loading state
         try {
-            const { error } = await supabase
+            console.log('Verifying society:', id);
+
+            const { data, error } = await supabase
                 .from('societies')
                 .update({ is_verified: true })
-                .eq('id', id);
+                .eq('id', id)
+                .select(); // Return updated row
 
-            if (error) throw error;
+            if (error) {
+                console.error('Supabase error:', error);
+                throw error;
+            }
+
+            console.log('Update successful:', data);
+
+            // Refresh the list
+            await fetchSocieties();
+
             alert("Society Verified!");
-            fetchSocieties();
         } catch (error) {
-            console.error("Error verifying:", error.message);
-            alert("Verification failed");
+            console.error("Error verifying:", error);
+            alert("Verification failed: " + error.message);
+        } finally {
+            setVerifying(null); // Clear loading state
         }
     };
 
@@ -184,9 +215,13 @@ const AdminDashboard = ({ session }) => {
                                             {!s.is_verified && (
                                                 <button
                                                     onClick={() => verifySociety(s.id)}
-                                                    className="text-white bg-blue-600/80 hover:bg-blue-600 px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-blue-600/20 transition-all hover:scale-105"
+                                                    disabled={verifying === s.id}
+                                                    className={`text-white px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg transition-all ${verifying === s.id
+                                                        ? 'bg-gray-600 cursor-not-allowed opacity-50'
+                                                        : 'bg-blue-600/80 hover:bg-blue-600 shadow-blue-600/20 hover:scale-105'
+                                                        }`}
                                                 >
-                                                    Verify
+                                                    {verifying === s.id ? 'Verifying...' : 'Verify'}
                                                 </button>
                                             )}
                                         </td>
