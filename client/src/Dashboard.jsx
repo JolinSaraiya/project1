@@ -32,7 +32,10 @@ const Dashboard = ({ session }) => {
     const fetchSocieties = async () => {
         try {
             setLoading(true);
-            const { data, error } = await supabase.from('societies').select('*');
+            const { data, error } = await supabase
+                .from('societies')
+                .select('*')
+                .eq('user_id', session.user.id);
             if (error) throw error;
             setSocieties(data || []);
         } catch (error) {
@@ -75,7 +78,8 @@ const Dashboard = ({ session }) => {
                     latitude,
                     longitude,
                     tax_amount: taxAmount,
-                    is_verified: false
+                    is_verified: false,
+                    user_id: session.user.id
                 }
             ]);
 
